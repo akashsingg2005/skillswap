@@ -12,6 +12,10 @@ const getApiBaseUrl = () => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return 'http://localhost:5000/api';
   }
+  // Support Cloudflare Pages fallback to Render API
+  if (window.RENDER_BACKEND_URL) {
+    return `${window.RENDER_BACKEND_URL.replace(/\/$/, '')}/api`;
+  }
   return window.location.origin + '/api';
 };
 
