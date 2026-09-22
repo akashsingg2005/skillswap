@@ -95,4 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Background Warm-Up Ping for Render Free Tier Cold Starts
+  try {
+    const healthUrl = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://skillswap-9r3r.onrender.com/api') + '/health';
+    fetch(healthUrl).catch(() => {});
+  } catch (e) {}
 });

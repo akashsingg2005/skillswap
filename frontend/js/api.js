@@ -1,6 +1,6 @@
 /**
  * SkillSwap Central REST API Client
- * Configured for separate frontend & backend deployments.
+ * Configured for separate frontend & backend deployments with Cold-Start Auto-Retry.
  */
 
 // Live Production Render Backend URL
@@ -24,22 +24,47 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl();
 
+/**
+ * Helper: Robust Fetch with Timeout & Cold-Start Auto-Retry (Handles Render Free Instance Spin-Up)
+ */
+async function fetchWithRetry(url, options = {}, retries = 3, timeoutMs = 15000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timer);
+      if (!res.ok && attempt < retries) {
+        await new Promise((r) => setTimeout(r, 1000 * attempt));
+        continue;
+      }
+      return res;
+    } catch (err) {
+      clearTimeout(timer);
+      console.warn(`[API Client] Connection attempt ${attempt}/${retries} failed for ${url}:`, err.message);
+      if (attempt === retries) throw err;
+      await new Promise((r) => setTimeout(r, 1500 * attempt));
+    }
+  }
+}
+
 const api = {
   // Gigs APIs
   getGigs: async (params = {}) => {
     const query = new URLSearchParams(params).toString();
     const url = `${API_BASE_URL}/gigs${query ? `?${query}` : ''}`;
-    const res = await fetch(url);
+    const res = await fetchWithRetry(url);
     return res.json();
   },
 
   getGigById: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/gigs/${id}`);
+    const res = await fetchWithRetry(`${API_BASE_URL}/gigs/${id}`);
     return res.json();
   },
 
   createGig: async (gigData) => {
-    const res = await fetch(`${API_BASE_URL}/gigs`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/gigs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(gigData),
@@ -49,7 +74,7 @@ const api = {
 
   // Bookings APIs
   createBooking: async (bookingData) => {
-    const res = await fetch(`${API_BASE_URL}/bookings`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/bookings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bookingData),
@@ -60,17 +85,17 @@ const api = {
   getBookings: async (params = {}) => {
     const query = new URLSearchParams(params).toString();
     const url = `${API_BASE_URL}/bookings${query ? `?${query}` : ''}`;
-    const res = await fetch(url);
+    const res = await fetchWithRetry(url);
     return res.json();
   },
 
   getBookingById: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/bookings/${id}`);
+    const res = await fetchWithRetry(`${API_BASE_URL}/bookings/${id}`);
     return res.json();
   },
 
   acceptBooking: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/bookings/${id}/accept`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/bookings/${id}/accept`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -78,7 +103,7 @@ const api = {
   },
 
   declineBooking: async (id, reason = '') => {
-    const res = await fetch(`${API_BASE_URL}/bookings/${id}/decline`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/bookings/${id}/decline`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reason }),
@@ -87,7 +112,7 @@ const api = {
   },
 
   completeBooking: async (id) => {
-    const res = await fetch(`${API_BASE_URL}/bookings/${id}/complete`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/bookings/${id}/complete`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -95,7 +120,7 @@ const api = {
   },
 
   rateBooking: async (id, rating, review = '') => {
-    const res = await fetch(`${API_BASE_URL}/bookings/${id}/rate`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/bookings/${id}/rate`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ rating, review }),
@@ -105,7 +130,7 @@ const api = {
 
   // Payment APIs
   createPaymentOrder: async (bookingId, amount) => {
-    const res = await fetch(`${API_BASE_URL}/payments/create-order`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/payments/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bookingId, amount }),
@@ -114,7 +139,7 @@ const api = {
   },
 
   verifyPayment: async (paymentDetails) => {
-    const res = await fetch(`${API_BASE_URL}/payments/verify`, {
+    const res = await fetchWithRetry(`${API_BASE_URL}/payments/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentDetails),
@@ -125,7 +150,7 @@ const api = {
   // SkillMatch Engine API
   getMatches: async (params = {}) => {
     const query = new URLSearchParams(params).toString();
-    const res = await fetch(`${API_BASE_URL}/match?${query}`);
+    const res = await fetchWithRetry(`${API_BASE_URL}/match?${query}`);
     return res.json();
   },
 };
