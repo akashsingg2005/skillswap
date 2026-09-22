@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillSwap — Creator Gig Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Fixed Top Navigation Bar -->
+  <header class="fixed-header-wrapper">
+    <div class="top-gradient-bar"></div>
+    <div class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-symbol">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 10h14l-4-4"/>
+              <path d="M17 14H3l4 4"/>
+            </svg>
+          </div>
+          <div class="logo-text-wrapper">
+            <span class="logo-brand-skill">Skill</span><span class="logo-brand-swap">Swap</span>
+          </div>
+        </a>
+
+        <button class="hamburger" id="hamburger-toggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link active">Browse Marketplace</a></li>
+            <li><a href="post-gig.html" class="nav-link">Post a Gig</a></li>
+            <li><a href="bookings.html" class="nav-link">My Bookings</a></li>
+            <li><a href="dashboard.html" class="nav-link btn btn-secondary btn-sm">Creator Dashboard</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-tag">⚡ Creator Gig Marketplace</div>
+    <h1 class="hero-title">
+      Turn Your Skills Into <span>Opportunities.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Discover talented creators, book verified skills with instant SkillMatch discovery, and bring your next project to life.
+    </p>
+
+    <!-- Search Input Bar -->
+    <div class="search-container">
+      <span style="color: var(--text-muted); font-size: 1.2rem;">🔍</span>
+      <input type="text" id="search-input" class="search-input" placeholder="Search skills, services or creators (e.g. website, logo, video, React)...">
+      <button class="btn btn-primary" onclick="loadGigs()">Explore Gigs</button>
+    </div>
+  </section>
+
+  <!-- Category Pills -->
+  <div class="categories-wrapper">
+    <button class="category-pill active" data-category="All">✨ All Categories</button>
+    <button class="category-pill" data-category="Development">💻 Development</button>
+    <button class="category-pill" data-category="Design">🎨 Design</button>
+    <button class="category-pill" data-category="Video Editing">🎬 Video Editing</button>
+    <button class="category-pill" data-category="Writing">✍️ Writing</button>
+    <button class="category-pill" data-category="Marketing">📈 Marketing</button>
+    <button class="category-pill" data-category="Photography">📸 Photography</button>
+    <button class="category-pill" data-category="UI/UX">📱 UI/UX</button>
+  </div>
+
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div id="results-count" class="results-count">Loading gigs...</div>
+    <div class="sort-wrapper">
+      <label for="sort-select" style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">Sort by:</label>
+      <select id="sort-select" class="sort-select">
+        <option value="recommended">⚡ Recommended (SkillMatch)</option>
+        <option value="newest">🆕 Newest First</option>
+        <option value="price-low">💰 Price: Low to High</option>
+        <option value="price-high">💎 Price: High to Low</option>
+        <option value="rating">⭐ Highest Rated</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Marketplace Gigs Grid -->
+  <main class="main-content">
+    <div id="gigs-container" class="gigs-grid">
+      <!-- Dynamically populated by gigs.js -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p><strong>SkillSwap</strong> — Creator Gig Marketplace</p>
+    <p style="margin-top: 0.4rem;">Zero authentication required for instant access.</p>
+  </footer>
+
+  <!-- JS Dependencies -->
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/gigs.js"></script>
+</body>
+</html>

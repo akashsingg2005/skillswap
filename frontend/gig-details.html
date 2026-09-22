@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gig Details — SkillSwap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Fixed Top Navigation Bar -->
+  <header class="fixed-header-wrapper">
+    <div class="top-gradient-bar"></div>
+    <div class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-symbol">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 10h14l-4-4"/>
+              <path d="M17 14H3l4 4"/>
+            </svg>
+          </div>
+          <div class="logo-text-wrapper">
+            <span class="logo-brand-skill">Skill</span><span class="logo-brand-swap">Swap</span>
+          </div>
+        </a>
+
+        <button class="hamburger" id="hamburger-toggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Browse Marketplace</a></li>
+            <li><a href="post-gig.html" class="nav-link">Post a Gig</a></li>
+            <li><a href="bookings.html" class="nav-link">My Bookings</a></li>
+            <li><a href="dashboard.html" class="nav-link btn btn-secondary btn-sm">Creator Dashboard</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Gig Details Container -->
+  <main class="main-content" style="margin-top: 2.5rem;">
+    <div id="gig-details-container">
+      <div style="text-align: center; padding: 4rem 0; color: var(--text-muted);">
+        Loading service gig details...
+      </div>
+    </div>
+  </main>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span style="font-size: 0.75rem; font-weight: 800; color: #4f46e5; text-transform: uppercase; background: #eef2ff; padding: 0.3rem 0.65rem; border-radius: 9999px; display: inline-block; margin-bottom: 0.35rem;">✨ Instant Service Booking</span>
+          <h3 class="modal-title" style="font-size: 1.5rem; font-weight: 800;">Book Creator Service</h3>
+        </div>
+        <button class="close-btn" onclick="closeBookingModal()">×</button>
+      </div>
+
+      <form id="booking-form">
+        <div class="form-group">
+          <label class="form-label" for="client-name">👤 Your Name (Client) *</label>
+          <input type="text" id="client-name" class="form-input" placeholder="e.g. Priya Sharma" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="client-email">📧 Your Email Address *</label>
+          <input type="email" id="client-email" class="form-input" placeholder="e.g. priya@example.com" autocomplete="off" required>
+          <small style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-top: 0.35rem;">
+            🔒 Used to track your bookings directly without requiring password signup.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="preferred-date">📅 Preferred Delivery / Service Date *</label>
+          <input type="date" id="preferred-date" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="requirements">📝 Project Requirements & Deliverable Specs *</label>
+          <textarea id="requirements" class="form-textarea" rows="4" placeholder="Briefly describe what you need built or delivered..." required></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.85rem; margin-top: 1.75rem;">
+          <button type="button" class="btn btn-secondary" style="flex: 1; border-radius: 12px; font-weight: 700;" onclick="closeBookingModal()">Cancel</button>
+          <button type="submit" id="submit-booking-btn" class="btn btn-primary" style="flex: 2; border-radius: 12px; font-weight: 700; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);">
+            💳 Continue to Payment
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>SkillSwap</strong> — Creator Gig Marketplace</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/gigs.js"></script>
+  <script src="js/payment.js"></script>
+  <script src="js/booking.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dateInput = document.getElementById('preferred-date');
+      if (dateInput) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.value = tomorrow.toISOString().split('T')[0];
+      }
+    });
+  </script>
+</body>
+</html>

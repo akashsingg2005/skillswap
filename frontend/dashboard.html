@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creator Dashboard — SkillSwap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Fixed Top Navigation Bar -->
+  <header class="fixed-header-wrapper">
+    <div class="top-gradient-bar"></div>
+    <div class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-symbol">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 10h14l-4-4"/>
+              <path d="M17 14H3l4 4"/>
+            </svg>
+          </div>
+          <div class="logo-text-wrapper">
+            <span class="logo-brand-skill">Skill</span><span class="logo-brand-swap">Swap</span>
+          </div>
+        </a>
+
+        <button class="hamburger" id="hamburger-toggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Browse Marketplace</a></li>
+            <li><a href="post-gig.html" class="nav-link">Post a Gig</a></li>
+            <li><a href="bookings.html" class="nav-link">My Bookings</a></li>
+            <li><a href="dashboard.html" class="nav-link active btn btn-secondary btn-sm">Creator Dashboard</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <div>
+      <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; background: var(--primary-light); padding: 0.3rem 0.65rem; border-radius: 4px;">
+        Creator Hub
+      </span>
+      <h1 class="dashboard-title" style="margin-top: 0.35rem;">Creator Dashboard</h1>
+      <p class="dashboard-subtitle">Manage listed services, review incoming booking requests, and track earnings.</p>
+    </div>
+    <div>
+      <a href="post-gig.html" class="btn btn-primary">+ Post New Service</a>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-label">Total Gigs Listed</span>
+      <span class="stat-value" id="stat-total-gigs">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Pending Requests</span>
+      <span class="stat-value" id="stat-pending" style="color: var(--warning);">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Accepted Bookings</span>
+      <span class="stat-value" id="stat-accepted" style="color: var(--success);">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Completed Projects</span>
+      <span class="stat-value" id="stat-completed" style="color: #0284c7;">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Declined Requests</span>
+      <span class="stat-value" id="stat-declined" style="color: var(--danger);">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Total Earnings</span>
+      <span class="stat-value highlight" id="stat-earnings">₹0</span>
+    </div>
+  </section>
+
+  <!-- Main Requests List -->
+  <main class="main-content">
+    <div class="section-title">
+      <span>Incoming Booking Requests</span>
+      <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-muted);">
+        Double-Booking Protection Active
+      </span>
+    </div>
+
+    <div id="dashboard-bookings-container" class="bookings-list">
+      <!-- Dynamically populated by dashboard.js -->
+    </div>
+  </main>
+
+  <footer>
+    <p><strong>SkillSwap</strong> — Creator Gig Marketplace</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
