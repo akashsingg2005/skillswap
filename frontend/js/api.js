@@ -3,6 +3,9 @@
  * Configured for separate frontend & backend deployments.
  */
 
+// Live Production Render Backend URL
+const LIVE_RENDER_BACKEND = 'https://skillswap-9r3r.onrender.com/api';
+
 // Dynamic Backend Base URL
 const getApiBaseUrl = () => {
   if (window.ENV_API_BASE_URL) {
@@ -12,9 +15,9 @@ const getApiBaseUrl = () => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return 'http://localhost:5000/api';
   }
-  // Support Cloudflare Pages fallback to Render API
-  if (window.RENDER_BACKEND_URL) {
-    return `${window.RENDER_BACKEND_URL.replace(/\/$/, '')}/api`;
+  // Automatically fallback to live Render API when hosted on Cloudflare Pages
+  if (hostname.includes('pages.dev') || hostname.includes('cloudflare')) {
+    return LIVE_RENDER_BACKEND;
   }
   return window.location.origin + '/api';
 };
