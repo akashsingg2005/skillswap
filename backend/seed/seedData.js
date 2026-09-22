@@ -155,6 +155,81 @@ const seedDB = async () => {
     const createdGigs = await Gig.insertMany(sampleGigs);
     console.log(`Successfully seeded ${createdGigs.length} high-profile creator gigs!`);
 
+    // Showcase Sample Bookings covering ALL status lifecycle probabilities
+    const sampleBookings = [
+      {
+        gigId: createdGigs[0]._id, // Akash - Web Dev
+        clientName: 'Rohan Verma',
+        clientEmail: 'client@example.com',
+        requirements: 'Need a modern SaaS landing page with responsive design and user authentication hookups.',
+        preferredDate: '2026-10-05',
+        status: 'Pending',
+        paymentStatus: 'Paid',
+      },
+      {
+        gigId: createdGigs[1]._id, // Raj Solanki - UI/UX Design
+        clientName: 'Priya Sharma',
+        clientEmail: 'client@example.com',
+        requirements: 'Complete Figma design system and high-fidelity wireframes for an e-commerce mobile app.',
+        preferredDate: '2026-10-02',
+        status: 'Accepted',
+        paymentStatus: 'Paid',
+      },
+      {
+        gigId: createdGigs[2]._id, // Narayan Kumar - Video Editing
+        clientName: 'Kavya Gupta',
+        clientEmail: 'client@example.com',
+        requirements: 'Edit 5 Instagram Reels with fast captions, sound design, and color grading.',
+        preferredDate: '2026-09-20',
+        status: 'Completed',
+        paymentStatus: 'Paid',
+        // Unlocks Star Rating & Review Form on client view
+      },
+      {
+        gigId: createdGigs[4]._id, // Aryan Kumar Singh - Mobile App Dev
+        clientName: 'Siddharth Roy',
+        clientEmail: 'client@example.com',
+        requirements: 'Build a React Native mobile prototype with offline data sync for iOS and Android.',
+        preferredDate: '2026-09-18',
+        status: 'Completed',
+        paymentStatus: 'Paid',
+        rating: 5,
+        review: 'Aryan delivered an outstanding cross-platform app! Clean architecture, super responsive UI, and finished 2 days ahead of deadline.',
+      },
+      {
+        gigId: createdGigs[5]._id, // Vishal Kumar - Product Photography
+        clientName: 'Amit Patel',
+        clientEmail: 'client@example.com',
+        requirements: 'Commercial product photoshoot for 10 luxury watch items with studio lighting.',
+        preferredDate: '2026-09-25',
+        status: 'Declined',
+        declineReason: 'Studio space is fully booked on requested date. Please try scheduling for next week.',
+        paymentStatus: 'Paid',
+        // Unlocks Automatic Refund Notice Banner & Find Similar Creators button
+      },
+      {
+        gigId: createdGigs[6]._id, // Sanya Sharma - Logo Design
+        clientName: 'Deepak Nair',
+        clientEmail: 'user@example.com',
+        requirements: 'Minimalist vector logo and brand identity guidelines for AI healthcare startup.',
+        preferredDate: '2026-10-10',
+        status: 'Pending',
+        paymentStatus: 'Pending',
+      },
+      {
+        gigId: createdGigs[7]._id, // Ananya Verma - Growth Marketing
+        clientName: 'Sneha Kapoor',
+        clientEmail: 'user@example.com',
+        requirements: '30-day Instagram organic growth strategy and content calendar for lifestyle brand.',
+        preferredDate: '2026-09-28',
+        status: 'Accepted',
+        paymentStatus: 'Paid',
+      },
+    ];
+
+    const createdBookings = await Booking.insertMany(sampleBookings);
+    console.log(`Successfully seeded ${createdBookings.length} showcase booking records!`);
+
     process.exit(0);
   } catch (error) {
     console.error('Seeding Error:', error);
