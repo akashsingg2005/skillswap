@@ -3,7 +3,8 @@
 **Official Hackathon Submission**  
 **Hackathon ID:** `AZIS-DGFPCR`  
 **Track:** Track 2 – Web Product  
-**Brief:** SkillSwap — Creator Gig Marketplace
+**Live Production App:** [https://skillswap-9r3r.onrender.com](https://skillswap-9r3r.onrender.com)  
+**GitHub Repository:** [https://github.com/akashsingg2005/skillswap.git](https://github.com/akashsingg2005/skillswap.git)
 
 ---
 
